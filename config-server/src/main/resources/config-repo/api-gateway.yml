@@ -1,0 +1,39 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: employee-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/employees/**
+        - id: product-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/products/**
+        - id: purchase-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/purchases/**
+        - id: directory-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/directory/**
+        - id: csv-import-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/import/**
+        - id: reporting-service
+          uri: http://localhost:8086
+          predicates:
+            - Path=/reports/**
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN

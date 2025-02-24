@@ -1,0 +1,20 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: csv-import-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/electric_store
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN

@@ -1,0 +1,89 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: electric_store
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: myPassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  config-server:
+    build: ./config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    depends_on:
+      - postgres
+
+  employee-service:
+    build: ./employee-service
+    container_name: employee-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - config-server
+      - postgres
+
+#  # Пример добавления остальных сервисов:
+#  product-service:
+#    build: ./product-service
+#    container_name: product-service
+#    ports:
+#      - "8082:8082"
+#    depends_on:
+#      - config-server
+#      - postgres
+#
+#  purchase-service:
+#    build: ./purchase-service
+#    container_name: purchase-service
+#    ports:
+#      - "8083:8083"
+#    depends_on:
+#      - config-server
+#      - postgres
+#
+#  directory-service:
+#    build: ./directory-service
+#    container_name: directory-service
+#    ports:
+#      - "8084:8084"
+#    depends_on:
+#      - config-server
+#      - postgres
+#
+#  csv-import-service:
+#    build: ./csv-import-service
+#    container_name: csv-import-service
+#    ports:
+#      - "8085:8085"
+#    depends_on:
+#      - config-server
+#      - postgres
+#
+#  reporting-service:
+#    build: ./reporting-service
+#    container_name: reporting-service
+#    ports:
+#      - "8086:8086"
+#    depends_on:
+#      - config-server
+#      - postgres
+#
+#  api-gateway:
+#    build: ./api-gateway
+#    container_name: api-gateway
+#    ports:
+#      - "8087:8087"
+#    depends_on:
+#      - config-server
+#      - postgres
+
+volumes:
+  pgdata:

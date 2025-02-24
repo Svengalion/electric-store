@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: employee-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/electric_store
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# Уровень логирования (пример)
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
