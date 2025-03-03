@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EmployeeControllerIntegrationTest {
 
-    // Создаем контейнер PostgreSQL
     @Container
     public static PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:13")
             .withDatabaseName("electric_store")
@@ -40,13 +39,11 @@ public class EmployeeControllerIntegrationTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // Динамически прописываем настройки базы, чтобы они использовались в тестовом контексте
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
         registry.add("spring.datasource.username", postgresContainer::getUsername);
         registry.add("spring.datasource.password", postgresContainer::getPassword);
-        // можно добавить другие свойства, если требуется
     }
 
     @Test
